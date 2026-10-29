@@ -1,19 +1,33 @@
 package mascotas;
 import java.util.*;
 import servicios.*;
+import personas.*;
 
 public abstract class Mascota{
     protected String nombre;
     protected int edad;
     protected float peso;
-    protected String nombreDueno;
-    protected LinkedList<ServicioCobro> historial = new LinkedList<>();
+    protected Dueno dueno;
+    protected LinkedList<Cita> historial = new LinkedList<>();
+    protected ArrayList<Cita> agenda = new ArrayList<>();
 
-    public Mascota(String nombre, int edad, float peso, String nombreDueno){
+    public Mascota(String nombre, int edad, float peso, Dueno dueno){
         this.nombre = nombre;
         setEdad(edad);
         setPeso(peso);
-        this.nombreDueno = nombreDueno;
+        this.dueno = dueno;
+    }
+
+    public abstract String getTipo();
+
+    public abstract String getSonido();
+
+    public void setCita(Cita cita){
+        agenda.add(cita);
+    }
+
+    public Dueno getDueno(){
+        return dueno;
     }
 
     private void setPeso(float peso) {
@@ -30,20 +44,5 @@ public abstract class Mascota{
             return;
         }
         System.out.println("La edad es negativa");
-    }
-
-    public addConsulta(){
-        ConsultaGeneral nuevo = new ConsultaGeneral();
-        historial.addFirst(nuevo);
-    }
-
-    public addConsulta(float precioVacuna){
-        Vacunacion nuevo = new Vacunacion(precioVacuna);
-        historial.addFirst(nuevo);
-    }
-
-    public addConsulta(float complejidad, int horas){
-        Cirugia nuevo = new Cirugia(complejidad, horas);
-        historial.addFirst(nuevo);
     }
 }

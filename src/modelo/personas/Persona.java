@@ -1,15 +1,19 @@
 package personas;
 
 public abstract class Persona{
-    String nombreP;
-    String apellido;
-    String telefono;
-    String correo;
+    protected String nombreP;
+    protected String apellido;
+    protected String telefono;
+    protected String correo;
 
-    Persona(String nombreP, String apellido, String telefono, String correo){
+    public Persona(String nombreP, String apellido, String telefono, String correo){
         this.nombreP = nombreP;
         this.apellido = apellido;
         this.telefono = telefono;
         this.correo = correo;
+    }
+
+    public String getNombreCompleto(){
+        return nombreP + " " + apellido;
     }
 }
