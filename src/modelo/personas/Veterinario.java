@@ -16,4 +16,13 @@ public class Veterinario extends Persona{
     public void setCita(Cita cita){
         agenda.add(cita);
     }
+
+    public boolean isDisponible(LocalDate fecha){
+        for(Cita cita : agenda){
+            if(cita.getFecha().equals(fecha)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

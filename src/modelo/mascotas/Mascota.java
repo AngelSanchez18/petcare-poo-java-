@@ -18,9 +18,22 @@ public abstract class Mascota{
         this.dueno = dueno;
     }
 
+    public String getNombre(){
+        return nombre;
+    }
+
     public abstract String getTipo();
 
     public abstract String getSonido();
+
+    public void printCitas(){
+        int i = 1;
+        System.out.println("Citas de " + nombre);
+        for(Cita cita : agenda){
+            System.out.println(i + ". Cita: " + cita.getFecha());
+            i++;
+        }
+    }
 
     public void setCita(Cita cita){
         agenda.add(cita);
@@ -44,5 +57,31 @@ public abstract class Mascota{
             return;
         }
         System.out.println("La edad es negativa");
+    }
+
+    public int getAgendaSize(){
+        return agenda.size();
+    }
+
+    public void atenderCita(int opt){
+        if(opt >= 0 && opt < agenda.size()){
+            Cita cita = agenda.get(opt);
+            cita.atenderCita();
+            agenda.remove(cita);
+            historial.add(cita);
+            return;
+        }
+        System.out.println("Opcion no valida");
+    }
+
+    public void cancelarCita(int opt){
+        if(opt >= 0 && opt < agenda.size()){
+            Cita cita = agenda.get(opt);
+            cita.cancelarCita();
+            agenda.remove(cita);
+            historial.add(cita);
+            return;
+        }
+        System.out.println("Opcion no valida");
     }
 }

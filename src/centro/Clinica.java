@@ -58,6 +58,14 @@ public class Clinica{
 
         System.out.print("Escriba el nombre: ");
         String nombre = scanner.nextLine();
+
+        for(Mascota mascota : mascotas.values()){
+            if(mascota.getNombre().equals(nombre)){
+                System.out.println("Ya existe una mascota con ese nombre");
+                return;
+            }
+        }
+
         System.out.print("Escriba la edad: ");
         int edad = scanner.nextInt();
         System.out.print("Escriba el peso: ");
@@ -108,6 +116,16 @@ public class Clinica{
         return new Dueno(nombre, apellido, telefono, correo, direccion);
     }
 
+    private boolean especialidadCompatible(String especialidad, String tipoMascota) {
+    return switch (especialidad) {
+        case "Perros" -> tipoMascota.equals("Perro");
+        case "Gatos" -> tipoMascota.equals("Gato");
+        case "Aves" -> tipoMascota.equals("Ave exotica");
+        default -> false;
+        };
+    }
+
+
     public void agendarCita(){
         System.out.println("Datos de la cita");
         System.out.print("Escriba el nombre de la mascota: ");
@@ -118,9 +136,12 @@ public class Clinica{
             return;
         }
 
+        System.out.print("Escriba la fecha (AAAA-MM-DD): ");
+        LocalDate fecha = LocalDate.parse(scanner.nextLine());
+
         ArrayList<Veterinario> veterinariosCompatibles = new ArrayList<>();
         for(Veterinario veterinario : personal){
-            if(especialidadCompatible(veterinario.especialidad, mascota.getTipo())){
+            if(especialidadCompatible(veterinario.especialidad, mascota.getTipo()) && veterinario.isDisponible(fecha)){
                 veterinariosCompatibles.add(veterinario);
             }
         }
@@ -138,9 +159,6 @@ public class Clinica{
             return;
         }
         Veterinario veterinario = veterinariosCompatibles.get(opcionVeterinario - 1);
-
-        System.out.print("Escriba la fecha (AAAA-MM-DD): ");
-        LocalDate fecha = LocalDate.parse(scanner.nextLine());
 
         System.out.println("Seleccione el servicio:");
         System.out.println("1. Consulta general");
@@ -186,16 +204,30 @@ public class Clinica{
         System.out.println("Cita programada correctamente");
     }
 
-    public void atenderCita(){
-
-    }
-
-    public void cancelarCita(){
-
+    public void procesarCita(boolean opt){
+        System.out.print("Escriba el nombre de la mascota: ");
+        String nombre = scanner.nextLine();
+        if(mascotas.containsKey(nombre)){
+            mascotas.get(nombre).printCitas();
+            System.out.print("Elija la cita a atender: ");
+            int opcionCita = scanner.nextInt();
+            scanner.nextLine();
+            if(opcionCita < 1 || opcionCita > mascotas.get(nombre).getAgendaSize()){
+                System.out.println("Opcion no valida");
+                return;
+            }
+            if(!opt){
+                mascotas.get(nombre).cancelarCita(opcionCita - 1);
+            } else {
+                mascotas.get(nombre).atenderCita(opcionCita - 1);
+            }
+        } else {
+            System.out.println("No se encontro la mascota");
+        }
     }
 
     public void generarComprobante(){
-
+        
     }
 
     public void consultarHistorial(){

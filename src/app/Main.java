@@ -7,7 +7,7 @@ import mascotas.*;
 
 public class Main{
 
-    void menu(){
+    public static void menu(){
         System.out.println("1.Registrar dueno y mascota");
         System.out.println("2.Registrar veterinario y asignar clinica");
         System.out.println("3.Agendar una cita");
@@ -24,7 +24,7 @@ public class Main{
 
     public static void main(String args[]){
         Scanner scanner = new Scanner(System.in);
-        Clinica clinica;
+        Clinica clinica = new Clinica();
         System.out.println("Bienvenido a Petcare!");
         menu();
         System.out.print("Elija alguna de las opciones: ");
@@ -44,11 +44,11 @@ public class Main{
                 break;
             
             case 4:
-                clinica.atenderCita();
+                clinica.procesarCita(true);
                 break;
             
             case 5:
-                clinica.cancelarCita();
+                clinica.procesarCita(false);
                 break;
             
             case 6:
@@ -68,7 +68,7 @@ public class Main{
                 break;
 
             case 10:
-                clinica.darDeBaja()
+                clinica.darDeBaja();
                 break;
 
             case 11:
@@ -76,7 +76,7 @@ public class Main{
                 break;
 
             default:
-                System.out.prinln("Opcion no valida!");
+                System.out.println("Opcion no valida!");
                 break;    
         }
     }

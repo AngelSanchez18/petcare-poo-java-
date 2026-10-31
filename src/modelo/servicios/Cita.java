@@ -20,4 +20,26 @@ public class Cita{
         this.mascota = mascota;
         this.veterinario = veterinario;
     }
+
+    public void atenderCita(){
+        if(estado == EstadoCita.PROGRAMADA){
+            estado = EstadoCita.ATENDIDA;
+            System.out.println("Cita atendida exitosamente");
+            return;
+        }
+        System.out.println("La cita se encuentra cancelada o ya fue atendida");
+    }
+
+    public void cancelarCita(){
+        if(estado == EstadoCita.PROGRAMADA){
+            estado = EstadoCita.CANCELADA;
+            System.out.println("Cita cancelada exitosamente");
+            return;
+        }
+        System.out.println("La cita se encuentra atendida o ya fue cancelada");
+    }
+
+    public LocalDate getFecha(){
+        return fecha;
+    }
 }
