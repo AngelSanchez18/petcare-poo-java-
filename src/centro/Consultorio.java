@@ -14,6 +14,14 @@ public class Consultorio{
         setId(id);
     }
 
+    public int getId(){
+        return id;
+    }
+
+    public String getNombre(){
+        return nombre;
+    }
+
     private void setId(int id){
         if(id >= 0){
             this.id = id;
@@ -25,5 +33,12 @@ public class Consultorio{
     public void setRecepcionista(String nombre, String apellido, String telefono, String correo, String turno){
         Recepcionista nuevo = new Recepcionista(nombre, apellido, telefono, correo, turno);
         personal.put(nombre, nuevo);
+    }
+
+    public void agregarRecepcionista(Recepcionista recepcionista){
+        if(recepcionista == null){
+            throw new IllegalArgumentException("La recepcionista es obligatoria");
+        }
+        personal.put(recepcionista.getNombreCompleto(), recepcionista);
     }
 }

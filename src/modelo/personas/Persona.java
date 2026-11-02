@@ -16,4 +16,8 @@ public abstract class Persona{
     public String getNombreCompleto(){
         return nombreP + " " + apellido;
     }
+
+    public String getNombre(){
+        return nombreP;
+    }
 }

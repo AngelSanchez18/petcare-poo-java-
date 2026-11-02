@@ -84,4 +84,39 @@ public abstract class Mascota{
         }
         System.out.println("Opcion no valida");
     }
+
+    public void printHistorial(){
+        System.out.println("Historial de " + nombre);
+        if(historial.isEmpty()){
+            System.out.println("La mascota no tiene historial");
+            return;
+        }
+        for(int i = 0; i < historial.size(); i++){
+            Cita cita = historial.get(i);
+            System.out.println((i + 1) + ". " + cita.getFecha()
+                + " - " + cita.getEstado());
+        }
+    }
+
+    public int getHistorialSize(){
+        return historial.size();
+    }
+
+    public void generarComprobante(int opcion){
+        if(opcion < 1 || opcion > historial.size()){
+            System.out.println("Opcion no valida");
+            return;
+        }
+        historial.get(opcion - 1).generarComprobante();
+    }
+
+    public float getTotalCobrado(){
+        float total = 0;
+        for(Cita cita : historial){
+            if(cita.getEstado() == EstadoCita.ATENDIDA){
+                total += cita.getTotal();
+            }
+        }
+        return total;
+    }
 }

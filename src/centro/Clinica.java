@@ -16,6 +16,44 @@ public class Clinica{
         nombre = "Pet care";
     }
 
+    public void agregarConsultorio(Consultorio consultorio){
+        if(consultorio == null){
+            throw new IllegalArgumentException("El consultorio es obligatorio");
+        }
+        consultorios.put(consultorio.getNombre(), consultorio);
+    }
+
+    public void agregarVeterinario(Veterinario veterinario, int idConsultorio){
+        if(veterinario == null){
+            throw new IllegalArgumentException("El veterinario es obligatorio");
+        }
+        Consultorio consultorio = buscarConsultorio(idConsultorio);
+        if(consultorio == null){
+            throw new IllegalArgumentException("No existe el consultorio indicado");
+        }
+        veterinario.asignarConsultorio(idConsultorio);
+        personal.add(veterinario);
+    }
+
+    public void agregarMascota(Mascota mascota){
+        if(mascota == null){
+            throw new IllegalArgumentException("La mascota es obligatoria");
+        }
+        if(mascotas.containsKey(mascota.getNombre())){
+            throw new IllegalArgumentException("Ya existe una mascota con ese nombre");
+        }
+        mascotas.put(mascota.getNombre(), mascota);
+    }
+
+    private Consultorio buscarConsultorio(int id){
+        for(Consultorio consultorio : consultorios.values()){
+            if(consultorio.getId() == id){
+                return consultorio;
+            }
+        }
+        return null;
+    }
+
     public void setPersonal(){
         System.out.println("Datos del veterinario");
         System.out.print("Escriba el nombre: ");
@@ -227,22 +265,95 @@ public class Clinica{
     }
 
     public void generarComprobante(){
-        
+        System.out.println("Generar comprobante por:");
+        System.out.println("1. Mascota");
+        System.out.println("2. Veterinario");
+        System.out.print("Elija una opcion: ");
+        int tipo = scanner.nextInt();
+        scanner.nextLine();
+
+        if(tipo == 1){
+            System.out.print("Escriba el nombre de la mascota: ");
+            Mascota mascota = mascotas.get(scanner.nextLine());
+            if(mascota == null){
+                System.out.println("No existe una mascota con ese nombre");
+                return;
+            }
+            mascota.printHistorial();
+            if(mascota.getHistorialSize() == 0){
+                return;
+            }
+            System.out.print("Elija el historial para generar: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+            mascota.generarComprobante(opcion);
+            return;
+        }
+
+        if(tipo == 2){
+            System.out.print("Escriba el nombre completo del veterinario: ");
+            String nombre = scanner.nextLine();
+            for(Veterinario veterinario : personal){
+                if(veterinario.getNombreCompleto().equals(nombre)){
+                    veterinario.printHistorial();
+                    if(veterinario.getHistorialSize() == 0){
+                        return;
+                    }
+                    System.out.print("Elija el historial para generar: ");
+                    int opcion = scanner.nextInt();
+                    scanner.nextLine();
+                    veterinario.generarComprobante(opcion);
+                    return;
+                }
+            }
+            System.out.println("No existe un veterinario con ese nombre");
+            return;
+        }
+        System.out.println("Opcion no valida");
     }
 
     public void consultarHistorial(){
-
+        System.out.print("Escriba el nombre de la mascota: ");
+        Mascota mascota = mascotas.get(scanner.nextLine());
+        if(mascota == null){
+            System.out.println("No existe una mascota con ese nombre");
+            return;
+        }
+        mascota.printHistorial();
     }
 
     public void listarMascotas(){
-
+        if(mascotas.isEmpty()){
+            System.out.println("No hay mascotas registradas");
+            return;
+        }
+        System.out.println("Mascotas registradas:");
+        for(Mascota mascota : mascotas.values()){
+            System.out.println("- " + mascota.getNombre() + " ("
+                + mascota.getTipo() + ") - Sonido: " + mascota.getSonido());
+        }
     }
 
     public void consultarCobradoVeterinario(){
-
+        System.out.print("Escriba el nombre completo del veterinario: ");
+        String nombre = scanner.nextLine();
+        for(Veterinario veterinario : personal){
+            if(veterinario.getNombreCompleto().equals(nombre)){
+                System.out.println("Cobrado por " + nombre + ": $"
+                    + veterinario.getTotalCobrado());
+                return;
+            }
+        }
+        System.out.println("No existe un veterinario con ese nombre");
     }
 
     public void darDeBaja(){
-        
+        System.out.print("Escriba el nombre de la mascota: ");
+        String nombre = scanner.nextLine();
+        if(mascotas.remove(nombre) == null){
+            System.out.println("No existe una mascota con ese nombre");
+            return;
+        }
+        System.out.println("Mascota dada de baja correctamente");
     }
 }

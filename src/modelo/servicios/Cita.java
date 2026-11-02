@@ -42,4 +42,30 @@ public class Cita{
     public LocalDate getFecha(){
         return fecha;
     }
+
+    public EstadoCita getEstado(){
+        return estado;
+    }
+
+    public Mascota getMascota(){
+        return mascota;
+    }
+
+    public float getTotal(){
+        return servicio.getTotal();
+    }
+
+    public float getCobradoVeterinario(){
+        return getTotal() / 2;
+    }
+
+    public void generarComprobante(){
+        System.out.println("----- Comprobante -----");
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Mascota: " + mascota.getNombre());
+        System.out.println("Veterinario: " + veterinario.getNombreCompleto());
+        System.out.println("Estado: " + estado);
+        System.out.println("Total: $" + servicio.getTotal());
+        System.out.println("-----------------------");
+    }
 }
