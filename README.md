@@ -65,8 +65,6 @@ Aunque los archivos del modelo están organizados bajo `src/modelo/`, sus paquet
 | Composición | `src/modelo/mascotas/Mascota.java:12-13` | La mascota administra su agenda e historial. |
 | Encapsulamiento | `src/modelo/servicios/ServicioCobro.java:5-10` | El costo se protege y se consulta mediante `getTotal()`. |
 | Validación | `src/centro/Clinica.java:258-264` | Se valida la compatibilidad entre especialidad y mascota. |
-| Interfaz | No aplica | No se declaró una interfaz Java en este proyecto. |
-| Sobrecarga | No aplica | No hay métodos con el mismo nombre y distinta firma. |
 
 ## Instalación y ejecución
 
