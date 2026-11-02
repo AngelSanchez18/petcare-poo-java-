@@ -2,6 +2,7 @@ package mascotas;
 
 import personas.Dueno;
 
+// Representa una mascota de tipo gato.
 public class Gato extends Mascota{
     protected boolean esDomestico;
 

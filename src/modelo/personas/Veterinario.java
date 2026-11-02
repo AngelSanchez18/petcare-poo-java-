@@ -3,6 +3,7 @@ import servicios.*;
 import java.util.*;
 import java.time.*;
 
+// Representa un veterinario y las citas bajo su responsabilidad.
 public class Veterinario extends Persona{
     public String especialidad;
     public int idConsultorio;
@@ -14,6 +15,7 @@ public class Veterinario extends Persona{
     }
 
     public void asignarConsultorio(int idConsultorio){
+        // Asigna el consultorio después de validar su identificador.
         if(idConsultorio < 0){
             throw new IllegalArgumentException("El id del consultorio no puede ser negativo");
         }
@@ -25,6 +27,7 @@ public class Veterinario extends Persona{
     }
 
     public boolean isDisponible(LocalDate fecha){
+        // Verifica que no exista otra cita en la misma fecha.
         for(Cita cita : agenda){
             if(cita.getFecha().equals(fecha)){
                 return false;
@@ -34,6 +37,7 @@ public class Veterinario extends Persona{
     }
 
     public void printHistorial(){
+        // Muestra las citas que ya no están programadas.
         System.out.println("Historial de " + getNombreCompleto());
         int numero = 1;
         for(Cita cita : agenda){
@@ -60,6 +64,7 @@ public class Veterinario extends Persona{
     }
 
     public void generarComprobante(int opcion){
+        // Busca en el historial y genera el comprobante seleccionado.
         int numero = 1;
         for(Cita cita : agenda){
             if(cita.getEstado() != EstadoCita.PROGRAMADA){
@@ -74,6 +79,7 @@ public class Veterinario extends Persona{
     }
 
     public float getTotalCobrado(){
+        // Calcula la mitad del total de cada cita atendida.
         float total = 0;
         for(Cita cita : agenda){
             if(cita.getEstado() == EstadoCita.ATENDIDA){

@@ -1,5 +1,6 @@
 package personas;
 
+// Contiene los datos comunes de las personas de la clínica.
 public abstract class Persona{
     protected String nombreP;
     protected String apellido;

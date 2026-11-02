@@ -1,5 +1,6 @@
 package personas;
 
+// Representa al personal de recepción de un consultorio.
 public class Recepcionista extends Persona{
     protected String turno;
 

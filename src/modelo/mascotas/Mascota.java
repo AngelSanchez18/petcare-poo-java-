@@ -3,6 +3,7 @@ import java.util.*;
 import servicios.*;
 import personas.*;
 
+// Define los datos y operaciones comunes de las mascotas.
 public abstract class Mascota{
     protected String nombre;
     protected int edad;
@@ -27,6 +28,7 @@ public abstract class Mascota{
     public abstract String getSonido();
 
     public void printCitas(){
+        // Muestra las citas pendientes de la mascota.
         int i = 1;
         System.out.println("Citas de " + nombre);
         for(Cita cita : agenda){
@@ -41,6 +43,13 @@ public abstract class Mascota{
 
     public Dueno getDueno(){
         return dueno;
+    }
+
+    public void asignarDueno(Dueno dueno){
+        if(dueno == null){
+            throw new IllegalArgumentException("El dueño es obligatorio");
+        }
+        this.dueno = dueno;
     }
 
     private void setPeso(float peso) {
@@ -64,6 +73,7 @@ public abstract class Mascota{
     }
 
     public void atenderCita(int opt){
+        // Atiende una cita y la mueve al historial.
         if(opt >= 0 && opt < agenda.size()){
             Cita cita = agenda.get(opt);
             cita.atenderCita();
@@ -75,6 +85,7 @@ public abstract class Mascota{
     }
 
     public void cancelarCita(int opt){
+        // Cancela una cita y conserva el registro en el historial.
         if(opt >= 0 && opt < agenda.size()){
             Cita cita = agenda.get(opt);
             cita.cancelarCita();
@@ -86,6 +97,7 @@ public abstract class Mascota{
     }
 
     public void printHistorial(){
+        // Muestra las citas finalizadas o canceladas.
         System.out.println("Historial de " + nombre);
         if(historial.isEmpty()){
             System.out.println("La mascota no tiene historial");
@@ -94,7 +106,7 @@ public abstract class Mascota{
         for(int i = 0; i < historial.size(); i++){
             Cita cita = historial.get(i);
             System.out.println((i + 1) + ". " + cita.getFecha()
-                + " - " + cita.getEstado());
+                + " - " + cita.getEstado() + " - " + cita.getTotal());
         }
     }
 
@@ -103,6 +115,7 @@ public abstract class Mascota{
     }
 
     public void generarComprobante(int opcion){
+        // Genera el comprobante de una cita del historial.
         if(opcion < 1 || opcion > historial.size()){
             System.out.println("Opcion no valida");
             return;
@@ -111,6 +124,7 @@ public abstract class Mascota{
     }
 
     public float getTotalCobrado(){
+        // Suma únicamente las citas que fueron atendidas.
         float total = 0;
         for(Cita cita : historial){
             if(cita.getEstado() == EstadoCita.ATENDIDA){

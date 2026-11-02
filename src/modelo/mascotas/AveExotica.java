@@ -2,6 +2,7 @@ package mascotas;
 
 import personas.Dueno;
 
+// Representa una mascota de tipo ave exótica.
 public class AveExotica extends Mascota{
     protected float longitudAlas;
 
@@ -21,6 +22,7 @@ public class AveExotica extends Mascota{
     }
 
     private void setLongitudAlas(float longitudAlas){
+        // Evita guardar longitudes negativas.
         if(longitudAlas >= 0){
             this.longitudAlas = longitudAlas;
             return;

@@ -2,6 +2,7 @@ package mascotas;
 
 import personas.Dueno;
 
+// Representa una mascota de tipo perro.
 public class Perro extends Mascota{
     protected String raza;
     protected int nivelEnergia;
@@ -23,6 +24,7 @@ public class Perro extends Mascota{
     }
 
     private void setNivelEnergia(int nivelEnergia) {
+        // Evita guardar niveles de energía negativos.
         if(nivelEnergia >= 0){
             this.nivelEnergia = nivelEnergia;
             return;

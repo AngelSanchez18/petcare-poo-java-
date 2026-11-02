@@ -6,10 +6,12 @@ import servicios.*;
 import mascotas.*;
 import centro.*;
 
+// Punto de entrada de la aplicación de consola.
 public class Main{
 
+    // Muestra las operaciones disponibles de la clínica.
     public static void menu(){
-        System.out.println("1.Registrar dueno y mascota");
+        System.out.println("1.Registrar dueño y mascota");
         System.out.println("2.Registrar veterinario y asignar clinica");
         System.out.println("3.Agendar una cita");
         System.out.println("4.Atender cita");
@@ -25,7 +27,8 @@ public class Main{
 
     public static void main(String args[]){
         Scanner scanner = new Scanner(System.in);
-        Clinica clinica = new Clinica();
+        Clinica clinica = new Clinica(scanner);
+        // Carga información de ejemplo antes de iniciar el menú.
         cargarDatosIniciales(clinica);
 
         do{
@@ -33,6 +36,7 @@ public class Main{
             menu();
             System.out.print("Elija alguna de las opciones: ");
             int opt = scanner.nextInt();
+            scanner.nextLine();
 
             switch(opt){
                 case 0:
@@ -40,7 +44,7 @@ public class Main{
                     return;
 
                 case 1:
-                    clinica.setMascota();
+                    clinica.setCliente();
                     break;
                 
                 case 2:
@@ -91,6 +95,7 @@ public class Main{
     }
 
     private static void cargarDatosIniciales(Clinica clinica){
+        // Prepara consultorios, personal, mascotas y citas iniciales.
         Consultorio consultorioNorte = new Consultorio("Consultorio Norte", 1);
         Consultorio consultorioSur = new Consultorio("Consultorio Sur", 2);
         clinica.agregarConsultorio(consultorioNorte);
@@ -106,7 +111,7 @@ public class Main{
         Veterinario veterinarioGatos = new Veterinario(
             "Carlos", "Lopez", "555-2002", "carlos@petcare.com", "Gatos");
         Veterinario veterinarioAves = new Veterinario(
-            "Sofia", "Hernandez", "555-2003", "sofia@petcare.com", "Aves");
+            "Sofia", "Hernandez", "555-2003", "sofia@petcare.com", "Ave Exotica");
         clinica.agregarVeterinario(veterinarioPerros, consultorioNorte.getId());
         clinica.agregarVeterinario(veterinarioGatos, consultorioSur.getId());
         clinica.agregarVeterinario(veterinarioAves, consultorioNorte.getId());
@@ -124,9 +129,12 @@ public class Main{
             "Luna", 3, 4.2f, duenoGato, true);
         Mascota ave = new AveExotica(
             "Kiwi", 2, 0.8f, duenoAve, 25.0f);
-        clinica.agregarMascota(perro);
-        clinica.agregarMascota(gato);
-        clinica.agregarMascota(ave);
+        duenoPerro.agregarMascota(perro);
+        duenoGato.agregarMascota(gato);
+        duenoAve.agregarMascota(ave);
+        clinica.agregarDueno(duenoPerro);
+        clinica.agregarDueno(duenoGato);
+        clinica.agregarDueno(duenoAve);
 
         crearCita(perro, duenoPerro, veterinarioPerros,
             new ConsultaGeneral(), LocalDate.of(2026, 11, 5));
@@ -138,6 +146,7 @@ public class Main{
 
     private static void crearCita(Mascota mascota, Dueno dueno,
             Veterinario veterinario, ServicioCobro servicio, LocalDate fecha){
+        // Relaciona la cita con la mascota y el veterinario.
         Cita cita = new Cita(fecha, servicio, dueno, mascota, veterinario);
         mascota.setCita(cita);
         veterinario.setCita(cita);
